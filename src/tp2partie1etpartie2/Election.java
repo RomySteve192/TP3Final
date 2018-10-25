@@ -9,6 +9,10 @@ import java.util.Vector;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 /**
  *
  * @author Romy Steve
@@ -28,11 +32,19 @@ public class Election implements Serializable{
            nomsDepute = new LinkedList<String>();
            listeDepute = new LinkedList<Depute>();
            listeCirconscription = new Vector<Circonscription>();
-           index = null;
+          
     }
     
     public Election(){
            this(Constantes.ANNEE_ELECTION);
+    }
+    
+     public int[][] getIndex(){
+         return this.index;
+    }
+    
+    public void setIndex(int [][] tab){
+          this.index = tab;
     }
     
     public int ajouterCirconscription(String nom, int numero){
@@ -48,14 +60,14 @@ public class Election implements Serializable{
     
     public int ajouterNomParti(String nomParti){
         
-        if(!nomsParti.contains(nomsParti)){
+        if(!nomsParti.contains(nomParti)){
            nomsParti.add(nomParti);
         }
         return nomsParti.indexOf(nomParti);
     }
     
     public void ajouterDepute(int circonscription, String nomDepute, int noParti){
-        if(!nomsDepute.contains(nomsDepute)){
+        if(!nomsDepute.contains(nomDepute)){
            nomsDepute.add(nomDepute);
            this.creationObjDepute(circonscription, nomDepute, noParti);
         }
@@ -86,6 +98,20 @@ public class Election implements Serializable{
       public String[] obtenirNomsDepute(){
             return nomsDepute.toArray(new String[nomsDepute.size()]);
      }
-    
+      
+     public void genererIndex(){
+        index = new int[nomsCirconscriptions.size()][nomsParti.size()];
+        for(int i = 0; i < index.length; i++){
+            for(int j = 0; j < index[i].length; j++){
+                index[i][j] = Constantes.VIDE;
+            }
+        }
+        for (Depute objDep: listeDepute) {
+           
+            index[objDep.getNoCaseCircons() - 1][objDep.getNoCaseNomParti()] 
+                    = listeDepute.indexOf(objDep);
+         
+        }
+     }
     
 }
