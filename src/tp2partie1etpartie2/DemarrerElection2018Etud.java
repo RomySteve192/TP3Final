@@ -26,6 +26,7 @@ public class DemarrerElection2018Etud {
     public static void main(String[] args) {
         // TODO code application logic here
       String option;
+      String retour;
       String[] tabMenuPremiereFois = {"Ouvrir fichier texte",
                                       "Ouvrir fichier binaire"};
       String[] tabMenuDeuxiemeFois = {"Tous les députés d'une circonscription",
@@ -57,7 +58,7 @@ public class DemarrerElection2018Etud {
         election.genererIndex();
          
          //sauvegarde en binaire
-        /* ModuleFichier.sauverFichierBinaire(election);*/
+         ModuleFichier.sauverFichierBinaire(election);
          
       //A éxécuter seulement après que le fichier texte ait été ouvert
       //et sauvegardé en binaire (option ouvrir fic bin).
@@ -73,10 +74,12 @@ public class DemarrerElection2018Etud {
       JOptionPane.showMessageDialog(null, election.obtenirNomsParti());
 
       JOptionPane.showMessageDialog(null, election.obtenirNomsDepute());*/
+     do{
       option = affichageMenu(tabMenuDeuxiemeFois);
-      sousMenu( Arrays.asList(tabMenuDeuxiemeFois).indexOf(option), election);
+      retour = sousMenu( Arrays.asList(tabMenuDeuxiemeFois).indexOf(option), election);
+     }while(retour != null);
     
-     
+     JOptionPane.showMessageDialog(null, "Merci et bonne journée!!!");
      
 
    }
@@ -95,50 +98,61 @@ public class DemarrerElection2018Etud {
    
         
     
-    private static void sousMenu(int indice, Election election){
-       String nomCirc;
+    private static String sousMenu(int indice, Election election){
+       String nom = null;
+      /* String nomCirc;
        String nomDep;
-       String nomParti;
+       String nomParti;*/
        List list;
        int ind;
        switch (indice) {
 	    case 0:
                 list = Arrays.asList(election.obtenirNomsCirconscription());
-		nomCirc = dialogAffichageDesNoms(election, election.obtenirNomsCirconscription());
-                ind = list.indexOf(nomCirc);
-	    	depEtPartiCirconcription( ind, election);
+		nom = dialogAffichageDesNoms(election, election.obtenirNomsCirconscription());
+                if(nom != null){
+                    ind = list.indexOf(nom);
+                    depEtPartiCirconcription( ind, election);
+                }
 	        break;
 		
 	    case 1:
 	        list = Arrays.asList(election.obtenirNomsParti());
-                nomParti = dialogAffichageDesNoms(election, election.obtenirNomsParti());
-                ind = list.indexOf(nomParti);
-                obtenirNomsDepParti(ind,  election, nomParti);
+                nom = dialogAffichageDesNoms(election, election.obtenirNomsParti());
+                if(nom != null){
+                    ind = list.indexOf(nom);
+                    obtenirNomsDepParti(ind,  election, nom);
+                }
 		break;
                 
             case 2:
 		list = Arrays.asList(election.obtenirNomsDepute());
-                nomDep = dialogAffichageDesNoms(election, election.obtenirNomsDepute());
-                ind = list.indexOf(nomDep);
-                obtenirCirconsEtPartiDep(ind,  election,  nomDep); 
+                nom = dialogAffichageDesNoms(election, election.obtenirNomsDepute());
+                if(nom != null){
+                    ind = list.indexOf(nom);
+                    obtenirCirconsEtPartiDep(ind,  election,  nom); 
+                }
 	    	
 	        break;
 		
 	    case 3:
-	         
+	         nom = null;
 		break;    
                 
                 
 	   }
-    
+       return nom;
     }
     
     private static String dialogAffichageDesNoms(Election election, String[] listeNom){
                 
          String str = (String) JOptionPane.showInputDialog(null,
-              "Sélectionnez une circonscription",
-              "Circonscription",
+              "Sélectionnez un nom",
+              "Liste des noms",
               0, null, listeNom, listeNom[0]);
+         /* if (resultat == JOptionPane.OK_OPTION) {
+		newEnga.description = descriptionField.getText();
+		ajoutEngagement(newEnga,  app, nbreEng,  maxEnga);
+	   }*/
        
         
         return str;
