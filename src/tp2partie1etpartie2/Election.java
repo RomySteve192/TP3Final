@@ -32,7 +32,8 @@ public class Election implements Serializable{
            nomsDepute = new LinkedList<String>();
            listeDepute = new LinkedList<Depute>();
            listeCirconscription = new Vector<Circonscription>();
-          
+           index = new int[nomsCirconscriptions.size()][nomsParti.size()];
+           
     }
     
     public Election(){

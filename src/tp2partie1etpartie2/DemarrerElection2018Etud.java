@@ -25,8 +25,8 @@ public class DemarrerElection2018Etud {
     
     public static void main(String[] args) {
         // TODO code application logic here
-      String option;
-      String retour;
+      String option = null;
+      String retour = null;
       String[] tabMenuPremiereFois = {"Ouvrir fichier texte",
                                       "Ouvrir fichier binaire"};
       String[] tabMenuDeuxiemeFois = {"Tous les députés d'une circonscription",
@@ -55,17 +55,17 @@ public class DemarrerElection2018Etud {
          //generation de l'index
          //A FAIRE DANS LA PARTIE 2, donc mettez cette instruction en commentaire
          //pendant que vous faites la partie 1.
-        election.genererIndex();
+      /**  election.genererIndex();**/
          
          //sauvegarde en binaire
-         ModuleFichier.sauverFichierBinaire(election);
+       //  ModuleFichier.sauverFichierBinaire(election);
          
       //A éxécuter seulement après que le fichier texte ait été ouvert
       //et sauvegardé en binaire (option ouvrir fic bin).
       }  else {
          election = ModuleFichier.getElectionBinaire();
       }
-
+      election.genererIndex();
       //Affiche les données des 3 collections (pour tests... à enlever dans la partie 2)
       //Notez qu'on ne voit pas toutes les données, mais assez pour juger
      /* JOptionPane.showMessageDialog(null,
@@ -77,7 +77,10 @@ public class DemarrerElection2018Etud {
      do{
       option = affichageMenu(tabMenuDeuxiemeFois);
       retour = sousMenu( Arrays.asList(tabMenuDeuxiemeFois).indexOf(option), election);
-     }while(retour != null);
+      if(option == tabMenuDeuxiemeFois[tabMenuDeuxiemeFois.length - 1]){
+          option = null;
+      }
+     }while( option != null);
     
      JOptionPane.showMessageDialog(null, "Merci et bonne journée!!!");
      
@@ -108,29 +111,35 @@ public class DemarrerElection2018Etud {
        switch (indice) {
 	    case 0:
                 list = Arrays.asList(election.obtenirNomsCirconscription());
-		nom = dialogAffichageDesNoms(election, election.obtenirNomsCirconscription());
-                if(nom != null){
-                    ind = list.indexOf(nom);
-                    depEtPartiCirconcription( ind, election);
-                }
+                do{
+                    nom = dialogAffichageDesNoms(election, election.obtenirNomsCirconscription());
+                    if(nom != null){
+                        ind = list.indexOf(nom);
+                        depEtPartiCirconcription( ind, election);
+                    }
+                }while(nom != null);
 	        break;
 		
 	    case 1:
 	        list = Arrays.asList(election.obtenirNomsParti());
-                nom = dialogAffichageDesNoms(election, election.obtenirNomsParti());
-                if(nom != null){
-                    ind = list.indexOf(nom);
-                    obtenirNomsDepParti(ind,  election, nom);
-                }
+                do{
+                    nom = dialogAffichageDesNoms(election, election.obtenirNomsParti());
+                    if(nom != null){
+                        ind = list.indexOf(nom);
+                        obtenirNomsDepParti(ind,  election, nom);
+                    }
+                }while(nom != null);
 		break;
                 
             case 2:
 		list = Arrays.asList(election.obtenirNomsDepute());
-                nom = dialogAffichageDesNoms(election, election.obtenirNomsDepute());
-                if(nom != null){
-                    ind = list.indexOf(nom);
-                    obtenirCirconsEtPartiDep(ind,  election,  nom); 
-                }
+                do{
+                    nom = dialogAffichageDesNoms(election, election.obtenirNomsDepute());
+                    if(nom != null){
+                        ind = list.indexOf(nom);
+                        obtenirCirconsEtPartiDep(ind,  election,  nom); 
+                    }
+                }while(nom != null);
 	    	
 	        break;
 		
