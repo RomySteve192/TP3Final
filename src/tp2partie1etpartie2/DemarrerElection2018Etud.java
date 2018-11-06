@@ -58,7 +58,7 @@ public class DemarrerElection2018Etud {
       /**  election.genererIndex();**/
          
          //sauvegarde en binaire
-         ModuleFichier.sauverFichierBinaire(election);
+       //  ModuleFichier.sauverFichierBinaire(election);
          
       //A éxécuter seulement après que le fichier texte ait été ouvert
       //et sauvegardé en binaire (option ouvrir fic bin).
@@ -203,7 +203,7 @@ public class DemarrerElection2018Etud {
                 if(election.getIndex()[ligne][col] != Constantes.VIDE && 
                         election.getIndex()[ligne][col] == ind){
                     str = "\t\n" + "Circonscription: " + election.obtenirNomsCirconscription()[ligne]+ 
-                            "\t\n" + "Parti: " + election.obtenirNomsDepute()[col];
+                            "\t\n" + "Parti: " + election.obtenirNomsParti()[col];
                 }
             }
         }
