@@ -58,7 +58,7 @@ public class DemarrerElection2018Etud {
       /**  election.genererIndex();**/
          
          //sauvegarde en binaire
-       //  ModuleFichier.sauverFichierBinaire(election);
+         ModuleFichier.sauverFichierBinaire(election);
          
       //A éxécuter seulement après que le fichier texte ait été ouvert
       //et sauvegardé en binaire (option ouvrir fic bin).
