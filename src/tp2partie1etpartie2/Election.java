@@ -9,13 +9,11 @@ import java.util.Vector;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+
 /**
- *
- * @author Romy Steve
+ * La classe Élection 
+ * @author Romy Steve / Jean Acre
+ * @version A2018
  */
 public class Election implements Serializable{
     private int annee;
@@ -40,79 +38,161 @@ public class Election implements Serializable{
            this(Constantes.ANNEE_ELECTION);
     }
     
-     public int[][] getIndex(){
+   /**
+    * accesseur qui permet d'accéder au tableau index
+    * 
+    * @return le  tableau index
+    */
+    public int[][] getIndex(){
          return this.index;
     }
     
+   /**
+    * accesseur qui permet de modifier le tableau index
+    * @param int [][] le nouveau tableau 
+    * 
+    */
     public void setIndex(int [][] tab){
           this.index = tab;
     }
     
+   /**
+    * méthode qui permet d'ajouter un nom de circonscrition dans la collection
+    * nomsCirconscriptions et un object circonscription dans la collection des
+    * objets circonscription
+    * @param String  nom de circonscrition
+    * @param int  numero de l'élu
+    * @return la position où le nom est ajouté dans la collection
+    */
     public int ajouterCirconscription(String nom, int numero){
-            int pos;
-            if(!nomsCirconscriptions.contains(nom)){
-              nomsCirconscriptions.add(nom);
-              pos = this.creationObjCircons(nom, numero);
-            }else{
-              pos = nomsCirconscriptions.indexOf(nom);
-            }
+        int pos;
+         /**
+         * stratégie: vérifier que le nom n'existe pas dans la collection et l'ajouter 
+         *            à la collection et retenir sa position sinon retenir sa position
+         */  
+        
+        if(!nomsCirconscriptions.contains(nom)){
+            nomsCirconscriptions.add(nom);
+            pos = this.creationObjCircons(nom, numero);
+        }else{
+            pos = nomsCirconscriptions.indexOf(nom);
+        }
         return pos;
     }
     
+   /**
+    * méthode qui permet d'ajouter un nom de parti dans la collection
+    * nomsParti 
+    * @param String  nom de parti
+    * @return la position où le nom est ajouté dans la collection
+    */
     public int ajouterNomParti(String nomParti){
+       /**
+         * stratégie: vérifier que le nom n'existe pas dans la collection et l'ajouter 
+         *            à la collection et retenir sa position sinon retenir sa position
+         */   
         
         if(!nomsParti.contains(nomParti)){
-           nomsParti.add(nomParti);
+            nomsParti.add(nomParti);
         }
         return nomsParti.indexOf(nomParti);
     }
     
+    /**
+    * méthode qui permet d'ajouter un nom du député dans la collection
+    * nomsDepute et un object depute dans la collection des
+    * objets députés
+    * @param int  numero de sa circonscrition
+    * @param String  nom du député
+    * 
+    */
     public void ajouterDepute(int circonscription, String nomDepute, int noParti){
+        /**
+         * stratégie: vérifier que le nom n'existe pas dans la collection et l'ajouter 
+         *            à la collection et retenir sa position sinon retenir sa position
+         */ 
+        
         if(!nomsDepute.contains(nomDepute)){
-           nomsDepute.add(nomDepute);
-           this.creationObjDepute(circonscription, nomDepute, noParti);
+            nomsDepute.add(nomDepute);
+            this.creationObjDepute(circonscription, nomDepute, noParti);
         }
     }
     
+    /**
+    * Sous programme qui permet de créer un objet circonscription
+    * @param String  nom de circonscrition
+    * @param int  numero de l'élu
+    * @return la position où le nom est ajouté dans la collection
+    */
     private int creationObjCircons(String nom, int numero){
-         Circonscription circons = new Circonscription();
-         circons.setNomCircons(nom);
-         circons.setNoCircons(numero);
-         listeCirconscription.add(circons);
+        
+        Circonscription circons = new Circonscription();
+        circons.setNomCircons(nom);
+        circons.setNoCircons(numero);
+        listeCirconscription.add(circons);
          
-         return listeCirconscription.indexOf(circons);
+        return listeCirconscription.indexOf(circons);
     }
     
-     private void creationObjDepute(int noCirconsDep, String nomDep, int noPartiDep){
-         Depute depute = new Depute(nomDep, noCirconsDep, noPartiDep);
-         listeDepute.add(depute);
-     }
-     
-     public String[] obtenirNomsCirconscription(){
-            return nomsCirconscriptions.toArray(new String[nomsCirconscriptions.size()]);
-     }
-     
-      public String[] obtenirNomsParti(){
-            return nomsParti.toArray(new String[nomsParti.size()]);
-     }
-      
-      public String[] obtenirNomsDepute(){
-            return nomsDepute.toArray(new String[nomsDepute.size()]);
-     }
-      
-     public void genererIndex(){
+    /**
+    * Sous programme qui permet de créer un objet Depute
+    * @param int  numero de circonscrition du député
+    * @param String  nom du député
+    * @param int  numero de parti du député 
+    * 
+    */
+    private void creationObjDepute(int noCirconsDep, String nomDep, int noPartiDep){
+        Depute depute = new Depute(nomDep, noCirconsDep, noPartiDep);
+        listeDepute.add(depute);
+    }
+    
+    /**
+    * Méthode qui permet de transformer la collection nomsCirconscriptions 
+    * en tableau de circonscription
+    */
+    public String[] obtenirNomsCirconscription(){
+        return nomsCirconscriptions.toArray(new String[nomsCirconscriptions.size()]);
+    }
+    
+    /**
+    * Méthode qui permet de transformer la collection nomsParti 
+    * en tableau de nomsParti
+    */
+    public String[] obtenirNomsParti(){
+        return nomsParti.toArray(new String[nomsParti.size()]);
+    }
+    
+    /**
+    * Méthode qui permet de transformer la collection nomsDepute 
+    * en tableau de nomsDepute
+    */
+    public String[] obtenirNomsDepute(){
+        return nomsDepute.toArray(new String[nomsDepute.size()]);
+    }
+    
+    /**
+    * Méthode qui permet de générer le tableau index
+    */
+    public void genererIndex(){
+        /**
+         * stratégie: parcourir le tableau index et le remplir par du VIDE
+         *            ensuite pour chaque objet depute dans la collection listeDepute
+         *            mettre NoCaseCircons du depute sur la ligne du tableau, 
+         *            NoCaseNomParti sur la colonne du tableau 
+         *            enfin l'index de l'objet depute à l'intersection
+         */ 
         index = new int[nomsCirconscriptions.size()][nomsParti.size()];
+        
         for(int i = 0; i < index.length; i++){
             for(int j = 0; j < index[i].length; j++){
                 index[i][j] = Constantes.VIDE;
             }
         }
+        
         for (Depute objDep: listeDepute) {
-           
             index[objDep.getNoCaseCircons() - 1][objDep.getNoCaseNomParti()] 
                     = listeDepute.indexOf(objDep);
-         
         }
-     }
+    }
     
 }

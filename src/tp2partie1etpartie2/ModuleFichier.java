@@ -30,10 +30,12 @@ import java.util.LinkedList;
  */
 public class ModuleFichier {
     
-    public static final int SAUVE = 0;
+   public static final int SAUVE = 0;
    public static final int OPEN = 1;
 
    /**
+    * @copyrigth TP1
+    * 
     * M�thode utilitaire priv�e qui permet d'obtenir un fichier s�lectionn� par
     * l'utilisateur. L'extension ne doit pas contenir le "."
     *
@@ -48,81 +50,96 @@ public class ModuleFichier {
     * @return null si le nom n'est pas valide ou si annul�.
     */
    private static File obtenirFic(String description,
-           String extension,
-           int type) {
+        String extension,
+        int type) {
 
-      /*
+       /*
        * Strat�gie : On utilise le JFileChooser de javax.swing selon 
        * le type (SAUVE ou OPEN) re�ue.
        * 
        * FileNameExtensionFilter permet de filtrer les extensions.
        */
       
-      //Cr�ation du s�lectionneur de fichier (r�pertoire courant).
-      JFileChooser fc = new JFileChooser(".");
+        //Cr�ation du s�lectionneur de fichier (r�pertoire courant).
+        JFileChooser fc = new JFileChooser(".");
 
-      File fic = null;
-      int reponse;
+        File fic = null;
+        int reponse;
 
-      //On filtre seulement les fichiers avec l'extension fournie
-      FileNameExtensionFilter filter
+        //On filtre seulement les fichiers avec l'extension fournie
+        FileNameExtensionFilter filter
               = new FileNameExtensionFilter(extension, extension);
 
-      fc.setDialogTitle(description);
-      fc.addChoosableFileFilter(filter);
-      fc.setFileFilter(filter);
+        fc.setDialogTitle(description);
+        fc.addChoosableFileFilter(filter);
+        fc.setFileFilter(filter);
 
-      //On obtient le nom du fichier � ouvrir en lecture ou en �criture?
-      if (type == OPEN) {
-         reponse = fc.showOpenDialog(null);
-      } else {
-         reponse = fc.showSaveDialog(null);
-      }
+        //On obtient le nom du fichier � ouvrir en lecture ou en �criture?
+        if (type == OPEN) {
+             reponse = fc.showOpenDialog(null);
+        } else {
+             reponse = fc.showSaveDialog(null);
+        }
 
-      //On obtient le fichier seulement si le fichier a �t� choisi
-      if (reponse == JFileChooser.APPROVE_OPTION) {
-         fic = fc.getSelectedFile();
-      }
+       //On obtient le fichier seulement si le fichier a �t� choisi
+        if (reponse == JFileChooser.APPROVE_OPTION) {
+             fic = fc.getSelectedFile();
+        }
 
-      return fic;
-   }
+        return fic;
+    }
    
-   
-   
+    /**
+    * @copyrigth TP1
+    * 
+    * M�thode utilitaire priv�e qui permet de lire chaque logne du fichier
+    * et la stocké dans un ArrayList
+    *
+    * @return ArrayList<String> des informations concernant les élections
+    */
     private static ArrayList<String> obtenirInfosFichierTexte() {
-
-      /*
-       * Strat�gie :
-       */
-    
-     String ligne;
-     ArrayList<String> tabInfosElection = new ArrayList<String>();
+        String ligne;
+        ArrayList<String> tabInfosElection = new ArrayList<String>();
+       /*
+        * Strat�gie : obtenir le fichier text et lire chaque ligne jusqu'à la fin du fichier
+        */
+       
+        File fic = obtenirFic ("Obtenir fichier electionQuebec2018", "txt", OPEN);
      
-     File fic = obtenirFic ("Obtenir fichier electionQuebec2018", "txt", OPEN);
-     
-     if(fic != null){
-        try{
-             Scanner fichier = new Scanner(fic);
-             while(fichier.hasNextLine()){
-                 if((ligne = fichier.nextLine())!= null){
-                     tabInfosElection.add(ligne);
-                 }
-             }
-          fichier.close();
-         }catch(FileNotFoundException e){
-             e.printStackTrace();
-         }
-     }
-     return tabInfosElection;
+        if(fic != null){
+            try{
+                Scanner fichier = new Scanner(fic);
+                while(fichier.hasNextLine()){
+                    if((ligne = fichier.nextLine())!= null){
+                        tabInfosElection.add(ligne);
+                    }
+                }
+                fichier.close();
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+        return tabInfosElection;
    }
 
 
-    
+    /**
+    * @copyrigth TP1
+    * 
+    * M�thode qui permet de remplir les attributs de l'object election
+    * après la liture du fichier
+    *
+    */
     public static void getElection(Election election){
         ArrayList<String> listInfosElection;
         String [] tab;
         int noParti;
         
+       /*
+        * Strat�gie : obtenir chaque String de l'ArrayList, transformé chaque 
+        *             en tableau de string et attribuer chaque string à l'attribut 
+        *             correspondante
+        */
         listInfosElection = obtenirInfosFichierTexte();
         for (String object: listInfosElection) {
             tab = object.split("\t");
@@ -132,34 +149,52 @@ public class ModuleFichier {
         }
     }
     
-    
+    /**
+    * @copyrigth TP1
+    * 
+    * M�thode utilitaire qui permet de sauvegarder l'objection election
+    * dans un fichier .bin
+    *
+    * @param election l'objet election à sauvegarder
+    *
+    */
     public static Election getElectionBinaire(){
     
       /*
-       * Strat�gie :
+       * Strat�gie : On utilise  un FileInputStream qui permet de lire
+       * les donn�es de l'application d'un coup.
        */
-      Election election = new Election();
-      File fic = obtenirFic("Obtenir le fichier binaire electionQuebec2018", "bin", SAUVE);
+        Election election = new Election();
+        File fic = obtenirFic("Obtenir le fichier binaire electionQuebec2018", "bin", SAUVE);
       
-      if(fic != null){
-          try{
+        if(fic != null){
+            try{
               
-              FileInputStream inFile = new FileInputStream(fic);
-              ObjectInputStream inStream = new ObjectInputStream(inFile);
-              election = (Election)inStream.readObject();
-              
-          }catch(FileNotFoundException e){
-             e.printStackTrace();
-          }catch(Exception e){
-             JOptionPane.showMessageDialog(null, "Format de fichier invalide");
-             e.printStackTrace();
-          }
-      }
-      return election;
+                FileInputStream inFile = new FileInputStream(fic);
+                ObjectInputStream inStream = new ObjectInputStream(inFile);
+                //Lecture et fermeture
+                election = (Election)inStream.readObject();
+                inStream.close();
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Format de fichier invalide");
+                e.printStackTrace();
+            }
+        }
+        return election;
     }
     
     
-    
+    /**
+    * @copyrigth TP1
+    * 
+    * M�thode utilitaire qui permet de sauvegarder l'objection election
+    * dans un fichier .bin
+    *
+    * @param election l'objet election à sauvegarder
+    *
+    */
     public static void sauverFichierBinaire(Election election){
         
       /*
@@ -210,12 +245,5 @@ public class ModuleFichier {
       }
     
     }
-    
-    
-    
-    
-    
-    
-    
-    
+   
 }
