@@ -23,14 +23,27 @@ public class Election implements Serializable{
     private LinkedList<Depute> listeDepute;
     private Vector<Circonscription> listeCirconscription;
     private int [][] index;
+    private ArrayList<Parti> partis;
+    
+    //utile pour connaitre la categorie du parti à partir du noms du parti
+    private ArrayList<String> nomsPartisGauche;
+    //utile pour connaitre la categorie du parti à partir du noms du parti
+    private ArrayList<String> nomsPartisDroite;
+      //utile pour connaitre la categorie du parti à partir du noms du parti
+    private ArrayList<String> nomsPartisCentre;
     
     public Election(int annee){
-           nomsCirconscriptions = new Vector<String>();
-           nomsParti = new ArrayList<String>();
-           nomsDepute = new LinkedList<String>();
-           listeDepute = new LinkedList<Depute>();
-           listeCirconscription = new Vector<Circonscription>();
-           index = new int[nomsCirconscriptions.size()][nomsParti.size()];
+        nomsCirconscriptions = new Vector<String>();
+        nomsParti = new ArrayList<String>();
+        nomsDepute = new LinkedList<String>();
+        listeDepute = new LinkedList<Depute>();
+        listeCirconscription = new Vector<Circonscription>();
+        index = new int[nomsCirconscriptions.size()][nomsParti.size()];
+        partis = new ArrayList<Parti>();
+           
+        nomsPartisGauche = new ArrayList<String>();
+        nomsPartisDroite = new ArrayList<String>();
+        nomsPartisCentre = new ArrayList<String>();
            
     }
     
@@ -46,6 +59,39 @@ public class Election implements Serializable{
     public int[][] getIndex(){
          return this.index;
     }
+    /**
+     * accesseur de la liste nomsPartisDroite
+     * @return nomsPartisDroite
+     */
+    public ArrayList<String> getNomsPartisGauche(){
+        return nomsPartisGauche;
+    }
+    
+     /**
+     * accesseur de la liste nomsPartisDroite
+     * @return nomsPartisDroite
+     */
+    public ArrayList<String> getNomsPartisDroite(){
+        return nomsPartisDroite;
+    }
+    
+     /**
+     * accesseur de la liste nomsPartisDroite
+     * @return nomsPartisDroite
+     */
+    public ArrayList<String> getNomsPartisCentre(){
+        return nomsPartisCentre;
+    }
+    
+     /**
+     * accesseur de la liste nomsPartisDroite
+     * @return nomsPartisDroite
+     */
+    public ArrayList<String> getNomsPartis(){
+        return nomsParti;
+    }
+    
+   
     
    /**
     * accesseur qui permet de modifier le tableau index
@@ -194,5 +240,85 @@ public class Election implements Serializable{
                     = listeDepute.indexOf(objDep);
         }
     }
+    
+    /***
+     * Methode qui permet d'ajouter un parti
+     * @param unParti le parti à ajouter
+     */
+     public void AjouterParti(Parti unParti){
+            partis.add(unParti);
+     }
+     
+    /*******
+     * Méthode qui permet de créer un tableau d'objet Parti
+     * @return Parti[] le tableau de Parti 
+     */
+    public Parti[] tabParti(){
+        Parti[] tab = new Parti[partis.size()];
+        return partis.toArray(tab);
+    }
+    
+    /*******
+     * Méthode qui permet d'obtenir le ième député
+     * @return Depute le ième député
+     */
+    public Depute obtenirDepute(int i){
+        return listeDepute.get(i);
+    }
+    
+     /*******
+     * Méthode qui permet d'obtenir le ième circonscription
+     * @return Circonscription le ième circonscription
+     */
+    public Circonscription obtenirCirconscription(int i){
+        return listeCirconscription.get(i);
+    }
+    
+    /***
+     * accesseur qui permet de trouver le nombre de député
+     * @return le nombre de député
+     */
+    public int getNbreDepute(){
+        return listeDepute.size();
+    }
+    
+    /***
+     * accesseur qui permet de trouver le nombre de circonscription
+     * @return le nombre de circonscription
+     */
+    public int getNbreCirconscription(){
+        return listeCirconscription.size();
+    }
+    
+    /*******
+     * Méthode qui permet d'ajouter le nom de l'OBNL
+     * @param nomPartiGauche 
+     */
+    public void ajouterPartiGauche(String nomPartiGauche){
+        if(!nomsPartisGauche.contains(nomPartiGauche)){
+            nomsPartisGauche.add(nomPartiGauche);
+        }
+    }
+    
+    /******
+     * Méthode utile pour connaitre la catégorie d'un parti
+     * @param nomPartiDroite 
+     */
+    public void ajouterNomsPartiDroite(String nomPartiDroite){
+        if(!nomsPartisDroite.contains(nomPartiDroite)){
+            nomsPartisDroite.add(nomPartiDroite);
+        }
+    }
+    
+     /******
+     * Méthode utile pour connaitre la catégorie d'un parti
+     * @param nomPartiCentre 
+     */
+    public void ajouterNomsPartiCentre(String nomPartiCentre){
+        if(!nomsPartisCentre.contains(nomPartiCentre)){
+            nomsPartisCentre.add(nomPartiCentre);
+        }
+    }
+    
     
 }

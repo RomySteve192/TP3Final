@@ -28,6 +28,7 @@ public class DemarrerElection2018Etud {
       String option = null;
       String retour = null;
       String str = null;
+      String [] tabAffichage;
       String[] tabMenuPremiereFois = {"Ouvrir fichier texte",
                                       "Ouvrir fichier binaire"};
       String[] tabMenuDeuxiemeFois = {"Tous les députés d'une circonscription",
@@ -60,7 +61,7 @@ public class DemarrerElection2018Etud {
 
 
                       //sauvegarde en binaire
-                      ModuleFichier.sauverFichierBinaire(election);
+                   ///   ModuleFichier.sauverFichierBinaire(election);
 
                       //A éxécuter seulement après que le fichier texte ait été ouvert
                       //et sauvegardé en binaire (option ouvrir fic bin).
@@ -68,22 +69,29 @@ public class DemarrerElection2018Etud {
                       election = ModuleFichier.getElectionBinaire();
                   }
                   election.genererIndex();
-
+                  tabAffichage = MethodeTestAffichagePartie1( election);
+                  
+                  
+                  
+      /* JOptionPane.showMessageDialog(null,
+                              tabAffichage.toArray());*/
+      
+                  
                   //Affiche les données des 3 collections (pour tests... à enlever dans la partie 2)
                   //Notez qu'on ne voit pas toutes les données, mais assez pour juger
-                     /* JOptionPane.showMessageDialog(null,
+                 /*    JOptionPane.showMessageDialog(null,
                               election.obtenirNomsCirconscription());
 
                       JOptionPane.showMessageDialog(null, election.obtenirNomsParti());
 
                       JOptionPane.showMessageDialog(null, election.obtenirNomsDepute());*/
                   do{
-                      option = affichageMenu(tabMenuDeuxiemeFois);
-                      retour = sousMenu( Arrays.asList(tabMenuDeuxiemeFois).indexOf(option), election);
-                      if(option == tabMenuDeuxiemeFois[tabMenuDeuxiemeFois.length - 1]){
+                      option = affichageMenu(tabAffichage, election);
+                     // retour = sousMenu( Arrays.asList(tabMenuDeuxiemeFois).indexOf(option), election);
+                     /* if(option == tabMenuDeuxiemeFois[tabMenuDeuxiemeFois.length - 1]){
                           option = null;
                           str = null;
-                      }
+                      }*/
                   }while( option != null);
 
                   if(str == null){
@@ -103,13 +111,17 @@ public class DemarrerElection2018Etud {
     * @param String[]  tableau contenant les noms à afficher
     * @return String retourne le choix de l'utilisateur
     */     
-   private static String affichageMenu(String [] tabMenu){
+   private static String affichageMenu(String [] tabMenu, Election election){
         String str = (String) JOptionPane.showInputDialog(null,
               "Sélectionnez une option",
-              "Les informations sur les députés",
+              "Les informations sur les partis",
               0, null, tabMenu, tabMenu[0]);
+        if(str != null){
+            sousMenu( Arrays.asList(tabMenu).indexOf(str), election);
+        }
         return str;
-   }     
+   }  
+   
     
    /**
     * méthode utilitaire privé qui permet de traiter le choix
@@ -119,15 +131,41 @@ public class DemarrerElection2018Etud {
     * @param Election l'object election contenant les données
     * @return String le choix de l'utilisateur dans le sous option du nouveau menu
     */   
-   private static String sousMenu(int indice, Election election){
-       String nom = null;
-       List list;
-       int ind;
-       /***
-        * Stratégie: chaque case correspond à un choix de l'utilisateur sur le menu des 
-        *            des options
-        */
-       switch (indice) {
+   private static /*String[]*/void sousMenu(int indice, Election election){
+       String[] noms = null;
+       Circonscription[] tabCirc;
+       Depute[] tabDep;
+      /* List list;
+       int ind;*/
+      
+      
+        if(election.tabParti()[indice] instanceof PartiDeGauche){
+            noms = ((PartiDeGauche)election.tabParti()[indice]).tabSupporteurs();
+
+        }else if (election.tabParti()[indice] instanceof PartiDuCentre){
+            tabCirc = ((PartiDuCentre)election.tabParti()[indice]).tabSupporteurs();
+            noms = new String[tabCirc.length];
+            for(int i = 0; i < tabCirc.length; i++){
+                noms[i] = tabCirc[i].getNomCircons();
+            }
+        }else if (election.tabParti()[indice] instanceof PartiDeDroite){
+            tabDep = ((PartiDeDroite)election.tabParti()[indice]).tabSupporteurs();
+            noms = new String[tabDep.length];
+            for(int i = 0; i < tabDep.length; i++){
+                if(election.getNomsPartisDroite().contains
+                         (election.getNomsPartis().get(tabDep[i].getNoCaseNomParti()))){
+                    noms[i] = tabDep[i].getNom() + " (" + ((PartiDeDroite)election.tabParti()[indice])
+                                                           .getCategorie() + ")";
+                }
+                
+               //String s = election.getNomsPartis().get(tabDep[i].getNoCaseNomParti());
+                election.getNomsPartisDroite();
+            }
+                             
+        }
+                 
+        JOptionPane.showMessageDialog(null, noms);
+     /*  switch (indice) {
 	    case 0:
                 list = Arrays.asList(election.obtenirNomsCirconscription());
                 do{
@@ -172,8 +210,8 @@ public class DemarrerElection2018Etud {
                 //Pour quitter l'application
 	         nom = null;
 		break; 
-        }
-        return nom;
+        }*/
+       // return noms;
     }
     
    /**
@@ -276,6 +314,27 @@ public class DemarrerElection2018Etud {
         JOptionPane.showMessageDialog(null, scrollPane, str2,  
                                                JOptionPane.OK_OPTION);
     }
+    
+    /***
+     * 
+     * @param election 
+     */
+    private static String[] MethodeTestAffichagePartie1(Election election){
+        String [] tabAffichage = new String[election.tabParti().length];
+        for(int i = 0; i < election.tabParti().length; i++){
+                        if(election.tabParti()[i] instanceof PartiDeGauche){
+                            tabAffichage[i] = ((PartiDeGauche)election.tabParti()[i]).toString();
+
+                        }else if (election.tabParti()[i] instanceof PartiDuCentre){
+                            tabAffichage[i] = ((PartiDuCentre)election.tabParti()[i]).toString();
+                        }else if (election.tabParti()[i] instanceof PartiDeDroite){
+                            tabAffichage[i] = ((PartiDeDroite)election.tabParti()[i]).toString();
+                        }
+                  }
+        return tabAffichage;
+    }
+    
+    
     /**
     * Nécessaire à JOptionPane sur un Mac
     */

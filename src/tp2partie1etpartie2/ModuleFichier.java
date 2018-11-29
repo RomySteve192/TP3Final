@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.Vector;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -147,6 +148,8 @@ public class ModuleFichier {
             noParti = election.ajouterNomParti(tab[2]);
             election.ajouterDepute(Integer.parseInt(tab[0]), tab[3] + " " + tab[4], noParti);
         }
+        genererPartis(election);
+        genererSupporteurs(election);
     }
     
     /**
@@ -245,5 +248,143 @@ public class ModuleFichier {
       }
     
     }
+    
+    
+    /****
+     * Methode qui permet de générer les partis
+     * @param election pour obtenir la collection nomsParti
+     */
+    public static void genererPartis(Election election){
+        Parti unParti;
+        int nb;
+        
+        for(String str : election.obtenirNomsParti()){
+            nb = UtilitaireFonctions.tirerUnNombreAleatoire(1, Constantes.NB_CATEGORIE_PARTI);
+            if(nb == Constantes.PARTI_DE_GAUCHE){
+                unParti = new PartiDeGauche(str);
+                election.ajouterPartiGauche(str);
+            }else if(nb == Constantes.PARTI_DE_CENTRE){
+                unParti = new PartiDuCentre(str);
+                election.ajouterNomsPartiCentre(str);
+            }else{
+                unParti = new PartiDeDroite(str);
+                election.ajouterNomsPartiDroite(str);
+            }
+            election.AjouterParti(unParti);
+        }
+        
+    }
+    
+    /***
+     * Méthode qui permet de générer les supporteurs
+     * @param election 
+     */
+    public static void genererSupporteurs(Election election){
+        
+        for(int i = 0; i < election.tabParti().length; i++){
+            if(election.tabParti()[i] instanceof PartiDeGauche){
+                genererOBNLSupporteurs((PartiDeGauche)election.tabParti()[i]);
+            
+            }else if (election.tabParti()[i] instanceof PartiDuCentre){
+                genererCirconscriptionSupportrice((PartiDuCentre)election.tabParti()[i], 
+                                                 election);
+            }else if (election.tabParti()[i] instanceof PartiDeDroite){
+                genererDeputeSupporteur((PartiDeDroite)election.tabParti()[i], 
+                                                election);
+            }
+        }
+    }
+    
+    /***
+     * Pour générer le nombre de supporteur OBNL
+     * @param gauche
+     * @param election 
+     */
+    private static void genererOBNLSupporteurs(PartiDeGauche gauche){
+        int nb;
+        nb = UtilitaireFonctions.tirerUnNombreAleatoire(1, Constantes.NB_OBNL_MAX);
+      
+        for(int i = 0; i < nb; i++){
+            gauche.ajouterOBNL("");
+        }
+      
+    }
+    
+    /***
+     * Pour générer les circonscriptions supportrices
+     * @param centre
+     * @param election 
+     */
+    private static void genererCirconscriptionSupportrice(PartiDuCentre centre, 
+            Election election){
+        int nb, noCirc;
+        ArrayList<Integer> tab = new ArrayList<Integer>();//pour vérifier si un nombre à été déjà choisi
+        Circonscription circ;
+        nb = UtilitaireFonctions.tirerUnNombreAleatoire(1,
+                Constantes.NB_CIRCONSCRIPTIONS_MAX);
+       
+        for(int i = 0; i < nb; i++){
+            noCirc = UtilitaireFonctions.tirerUnNombreAleatoire(0, 
+                    election.obtenirNomsCirconscription().length - 1);
+            while(tab.contains(noCirc)){
+                noCirc = UtilitaireFonctions.tirerUnNombreAleatoire(0,
+                        election.obtenirNomsCirconscription().length - 1);
+            }
+            circ = election.obtenirCirconscription(noCirc);
+            //ajouter la circonscription 
+            centre.ajouterCirconscription(circ);
+            tab.add(noCirc);
+        }
+    }
+    
+    /****
+     * Pour générer les députés supporteurs
+     * @param droite
+     * @param election 
+     */
+    private static void genererDeputeSupporteur(PartiDeDroite droite, 
+            Election election){
+        int nb;
+        int noDep;
+        String nomParti;
+        boolean Dedroite = false;
+        ArrayList<Integer> tab = new ArrayList<Integer>();//pour vérifier si un nombre à été déjà choisi
+        Depute depute = null;
+        nb = UtilitaireFonctions.tirerUnNombreAleatoire(1,
+                Constantes.NB_DEPUTE_MAX);
+       
+        
+        for(int i = 0; i < nb; i++){
+            noDep = UtilitaireFonctions.tirerUnNombreAleatoire(0, 
+                    election.obtenirNomsDepute().length - 1);
+            
+            while(Dedroite == false){
+                while(tab.contains(noDep)){
+                    noDep = UtilitaireFonctions.tirerUnNombreAleatoire(0,
+                            election.obtenirNomsCirconscription().length - 1);
+                }
+                //j obtiens le deputé
+                depute = election.obtenirDepute(noDep);
+                nomParti = election.obtenirNomsParti()[depute.getNoCaseNomParti()];
+                //vérifie si le depute est de droite
+                if(election.getNomsPartisDroite().contains(nomParti)){
+                    Dedroite = true;
+                }else{
+                    noDep = UtilitaireFonctions.tirerUnNombreAleatoire(0,
+                            election.obtenirNomsCirconscription().length - 1);
+                }
+            }
+            /*ajouter le député */
+            droite.ajouterDepute(depute);
+            tab.add(noDep);
+            Dedroite = false;
+        }
+     
+    }
+    
+    
+    
+    
+    
    
 }
