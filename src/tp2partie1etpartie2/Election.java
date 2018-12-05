@@ -1,14 +1,10 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tp2partie1etpartie2;
 import java.util.Vector;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * La classe Élection 
@@ -89,6 +85,14 @@ public class Election implements Serializable{
      */
     public ArrayList<String> getNomsPartis(){
         return nomsParti;
+    }
+    
+    /**
+     * accesseur de la liste des partis
+     * @return partis
+     */
+    public ArrayList<Parti> getPartis(){
+        return partis;
     }
     
    
@@ -320,5 +324,147 @@ public class Election implements Serializable{
         }
     }
     
+   /**
+    * Retourne un tableau contenant le nom de tous les partis d'une circonscription,
+    * en ordre croissant.
+    *
+    * @param nom Le nom de la circonscription cherchée
+    * @return Un tableau de noms des partis de la circonscription
+    */
+    public String[] obtenirNomsPartisParCirconscription(String nom) {
+        int indiceCirc;
+        ArrayList<Integer> arrIndPartiCirc = new ArrayList<Integer>();
+        String[] arrNomPartiCirc;
+        
+        //obtenir l' index du nom de la circonscription
+        indiceCirc = nomsCirconscriptions.indexOf(nom);
+        
+        //parcourir le tableau index à l'indice de la circonscription
+        //et récupérer tous les indice des partis engagé dans une circonscription
+        for(int i = 0; i < index[indiceCirc].length; i++){
+            if(index[indiceCirc][i] != Constantes.VIDE){
+                arrIndPartiCirc.add(i);
+            }
+        }
+        
+        arrNomPartiCirc = new String[arrIndPartiCirc.size()];
+        
+        //récupérer les noms des partis correspondants aux indices
+        for(int i = 0; i < arrIndPartiCirc.size(); i++){
+            arrNomPartiCirc[i] = nomsParti.get((int)arrIndPartiCirc.get(i));
+        }
+        //Classer par ordre croissant
+        Arrays.sort(arrNomPartiCirc);
+        
+        return arrNomPartiCirc;
+    }
+    
+    
+    /**
+    * Retourne un tableau avec les noms des députés pour une circonscription
+    * donnée. Le tableau retourné doit contenir les noms des députés dans le même
+    * ordre que leur parti d’attache, dans le tableau lesPartis donné en paramètre.
+    *
+    * @param nom Le nom de la circonscription cherchée
+    * @param lesPartis Un tableau contenant le nom de tous les partis de la
+    * circonscription cherchée, en ordre croissant.
+    * @return Le nom des députés de cette circonscription dans le même ordre que
+    * leur parti d’attache, dans le tableau lesPartis donné en paramètre.
+    */
+    public String[] obtenirNomsDeputesParCirconscription(String nom, String[] lesPartis) {
+        int indCirc;
+        int indParti;
+        String nomDep;
+        ArrayList<String> nomsDepCirc = new ArrayList<String>();
+        String[] arrNomDepCirc;
+        
+        //obtenir l' index du nom de la circonscription
+        indCirc = nomsCirconscriptions.indexOf(nom);
+        
+        //Parcourir chaque parti pour trouver son indice dans index
+        // et obtenir le deputé correspondant
+        for(String str : lesPartis){
+            indParti = nomsParti.indexOf(str);
+            if(index[indCirc][indParti] != Constantes.VIDE){
+                nomDep = nomsDepute.get(index[indCirc][indParti]);
+                nomsDepCirc.add(nomDep);
+            }
+        }
+        
+        arrNomDepCirc = new String[nomsDepCirc.size()];
+        
+        return nomsDepCirc.toArray(arrNomDepCirc);
+
+    }
+    
+   /**
+    * Retourne le nom de tous les députés d'un parti en ordre croissant.
+    *
+    * @param nomParti Le nom du parti cherché
+    * @return Un tableau des noms des députés de ce parti
+    */
+    public String[] obtenirNomsDeputesParParti(String nomParti) {
+        ArrayList<String> nomsDep = new ArrayList<String>();
+        String[] arrNomsDep;
+        
+        int noParti = nomsParti.indexOf(nomParti);
+        
+        for(Depute dep : listeDepute){
+            if(dep.getNoCaseNomParti() == noParti){
+                nomsDep.add(dep.getNom());
+            }
+        }
+        
+        arrNomsDep = new String[nomsDep.size()];
+        arrNomsDep = nomsDep.toArray(arrNomsDep);
+         //Classer par ordre croissant
+        Arrays.sort(nomsDep.toArray(arrNomsDep));
+        return arrNomsDep;
+    }
+    
+    /**
+    * Retourne le nom de tous les supporteurs d'un parti en ordre croissant.
+    *
+    * @param nomParti Le nom du parti cherché
+    * @return Un tableau des noms des supporteurs de ce parti
+    */
+    public String[] obtenirNomsSupporteursParParti(String nomParti) {
+        String[] supporteurs = null;
+        Depute[] deputes;
+        Circonscription[] Circons;
+        int i = 0;
+        
+        while(partis.get(i).getNom() != nomParti){
+            i++;
+        }
+        if(partis.get(i).getNom() == nomParti){
+            if(partis.get(i) instanceof PartiDeDroite){
+                
+                deputes = ((PartiDeDroite)(partis.get(i))).tabSupporteurs();
+                supporteurs = new String[deputes.length];
+                for(int j = 0; j < deputes.length; j++){
+                    supporteurs[j] = deputes[j].getNom();
+                }
+                
+            }else if(partis.get(i) instanceof PartiDeGauche){
+                
+                supporteurs = new String[]{((PartiDeGauche)(partis.get(i)))
+                                  .tabSupporteurs().length + " OBNL"};
+                
+            }else if(partis.get(i) instanceof PartiDuCentre){
+                
+                Circons = ((PartiDuCentre)(partis.get(i))).tabSupporteurs();
+                supporteurs = new String[Circons.length];
+                for(int j = 0; j < Circons.length; j++){
+                    supporteurs[j] = Circons[j].getNomCircons();
+                }
+            }
+        }
+        
+        //Classer par ordre croissant
+        Arrays.sort(supporteurs);
+        
+        return supporteurs;
+    }
     
 }

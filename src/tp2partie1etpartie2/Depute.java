@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tp2partie1etpartie2;
 import java.io.Serializable;
 /**
@@ -16,6 +12,12 @@ public class Depute implements Serializable{
     private int noCaseCircons;
     private int noCaseNomParti;
     
+    /**
+     * 
+     * @param nom
+     * @param noCaseCircons
+     * @param noCaseNomParti 
+     */
     public Depute(String nom, int noCaseCircons, int noCaseNomParti){
            this.nom = nom;
            this.noCaseCircons = noCaseCircons;
