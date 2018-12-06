@@ -20,8 +20,8 @@ import static tp2partie1etpartie2.CadreElection.preparerPourMac;
  */
 public class CadreElection extends JFrame implements Runnable{
         
-    private PanneauDeBas panneauBas;
-    private PanneauDeHaut panneauHaut;
+    private static PanneauDeBas panneauBas;
+    private static PanneauDeHaut panneauHaut;
     
     public CadreElection(){
     
@@ -31,7 +31,8 @@ public class CadreElection extends JFrame implements Runnable{
     */
     public void run() {
       //initialisation des composants
-       menuPrincipale();
+       //menuPrincipale();
+       BarreMenu barre = new BarreMenu(this);
     }
     
     /**
@@ -114,21 +115,38 @@ public class CadreElection extends JFrame implements Runnable{
        
    }
         
-   
+    /**
+     * 
+     * @param election
+     * @param fen 
+     */
+    public static void setElection(Election election, JFrame fen){
+        
+        panneauBas = new PanneauDeBas(election);
+        panneauHaut = new PanneauDeHaut(election);
+        
+        fen.getContentPane().add(panneauHaut, BorderLayout.NORTH);
+        fen.getContentPane().add(panneauBas.getPanelPanneauDeBas(), BorderLayout.SOUTH);
+
+        //4. Size the frame.
+        fen.pack();
+        fen.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+    }
     
     /**
     * Nécessaire à JOptionPane sur un Mac
     */
-   public static void preparerPourMac() {
+    public static void preparerPourMac() {
 
-      try {
-         UIManager.setLookAndFeel(
+        try {
+            UIManager.setLookAndFeel(
                  UIManager.getCrossPlatformLookAndFeelClassName());
 
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-   }
+         } catch (Exception e) {
+            e.printStackTrace();
+         }
+    }
     
 }
 
