@@ -15,14 +15,18 @@ import javax.swing.UIManager;
 import static tp2partie1etpartie2.CadreElection.preparerPourMac;
 
 /**
- *
+ * La classe qui représente le cadre principal
  * @author Romy Steve/ Jean Acre
  */
 public class CadreElection extends JFrame implements Runnable{
-        
+    
+    //variables static utile pour la méthode static setElectio(...)
     private static PanneauDeBas panneauBas;
     private static PanneauDeHaut panneauHaut;
     
+    /***
+     * contructeur de la classe CadreElection
+     */
     public CadreElection(){
     
     }
@@ -30,81 +34,16 @@ public class CadreElection extends JFrame implements Runnable{
     * Redefinition de la methode run de l'interface Runnable.
     */
     public void run() {
-      //initialisation des composants
-       //menuPrincipale();
-       BarreMenu barre = new BarreMenu(this);
+        //initialisation des composants
+        BarreMenu barre = new BarreMenu(this);
     }
     
-    /**
-    * Initialise une fenetre avec deux panneau
-    */
-    private void initComposants(Election election) {
-        
-        panneauBas = new PanneauDeBas(election);
-        panneauHaut = new PanneauDeHaut(election);
-        
-       // fenetre = new JFrame("Election au québec " + Constantes.ANNEE_ELECTION);
-        
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        
-        this.getContentPane().add(panneauHaut, BorderLayout.NORTH);
-        this.getContentPane().add(panneauBas.getPanelPanneauDeBas(), BorderLayout.SOUTH);
-
-        //4. Size the frame.
-        this.pack();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //5. Show it.
-        this.setVisible(true);
-    }
-   /***
-    * 
-    */
-    private void menuPrincipale(){
-        
-        String str = null;
-      
-        String[] tabMenuPremiereFois = {"Ouvrir fichier texte",
-                                           "Ouvrir fichier binaire"};
-        
-         //preparer le look and feel pour mac
-       // preparerPourMac();
-
-       //Les données sont chargées en mémoire.
-        Election election = new Election(Constantes.ANNEE_ELECTION);
-        
-        do{
-            //Affichage du menu demandant quel type de fichier on veut ouvrir.
-                str = (String) JOptionPane.showInputDialog(null,
-                    "Sélectionnez le type de fichier",
-                    "Type de fichier (texte ou binaire?)",
-                    0, null, tabMenuPremiereFois, 0);
-
-                if(str != null){
-                    //À exécuter la première fois (option ouvrir fic texte).
-                    if (str.equals(tabMenuPremiereFois[0])) {
-
-                      //lecture du fichier texte
-                        ModuleFichier.getElection(election);
-                      
-                    }else{
-                        election = ModuleFichier.getElectionBinaire();
-                    }
-                election.genererIndex();
-              //  tabAffichage = MethodeTestAffichagePartie1( election);
-                  
-                initComposants(election); 
-                  
-      
-            }else{
-                JOptionPane.showMessageDialog(null, "Merci et bonne journée!!!");
-            }
-
-        }while(str != null);
-        
-
-   }
-   
+    
+  
+    /***
+     * Méthode principale de lancement de l'application
+     * @param args 
+     */
    
     public static void main(String[] args) {
         preparerPourMac();

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tp2partie1etpartie2;
 
 import java.awt.BorderLayout;
@@ -12,27 +8,26 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- *
+ * Classe qui permet d'initialiser le cadre avec la barre de menu
  * @author Romy Steve
  */
 public class BarreMenu extends JMenuBar{
     
     private JMenu m1;  //menu 1 
     JMenuItem[] itemsMenu1; //contiendra les items du menus 1
-    private Election election;
-    private PanneauDeBas panneauBas;
-    private PanneauDeHaut panneauHaut;
-   
+    private Election election;//object election que l'on passera en paramètre à l'écouteur
     
     /***
-     * 
-     * @param cadre 
+     * Constructeur avec paramètre
+     * @param cadre JFrame représentant la fenêtre principale 
      */
     public BarreMenu(JFrame cadre){
         creerBarreDeMenus(cadre);
     }
-    /***
-     * 
+    /**
+     * Méthode privée appelé dans le constructeur qui permet 
+     * de créer la barre de menu dans la fenêtre principale
+     * @param frame JFrame représentant la fenêtre principale
      */
     private void creerBarreDeMenus(JFrame frame){
         election = new Election(Constantes.ANNEE_ELECTION);
@@ -61,7 +56,7 @@ public class BarreMenu extends JMenuBar{
         frame.setLocationRelativeTo(null);
         frame.setJMenuBar(this);
         
-        //Creation et ajout de l'ecouteur au bouton
+        //Creation et ajout de l'ecouteur de la barre de menu
         EcouteurBarreMenu ecouteur = new EcouteurBarreMenu( election, 
                                            this,  frame);  //classe interne
         this.getMenu(0).getItem(0).addActionListener(ecouteur);  

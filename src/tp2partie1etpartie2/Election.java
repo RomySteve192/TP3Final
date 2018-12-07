@@ -13,13 +13,13 @@ import java.util.Arrays;
  */
 public class Election implements Serializable{
     private int annee;
-    private Vector<String> nomsCirconscriptions;
-    private ArrayList<String> nomsParti;
-    private LinkedList<String> nomsDepute;
-    private LinkedList<Depute> listeDepute;
-    private Vector<Circonscription> listeCirconscription;
-    private int [][] index;
-    private ArrayList<Parti> partis;
+    private Vector<String> nomsCirconscriptions; //liste de nom des circonscription
+    private ArrayList<String> nomsParti;// liste des noms de parti
+    private LinkedList<String> nomsDepute;// liste des noms de députés
+    private LinkedList<Depute> listeDepute; // liste des noms des objets deputé
+    private Vector<Circonscription> listeCirconscription; // liste des noms des circonscriptions
+    private int [][] index; // tableau index
+    private ArrayList<Parti> partis; // liste des objets partis
     
     //utile pour connaitre la categorie du parti à partir du noms du parti
     private ArrayList<String> nomsPartisGauche;
@@ -29,8 +29,8 @@ public class Election implements Serializable{
     private ArrayList<String> nomsPartisCentre;
     
     /***
-     * 
-     * @param annee 
+     * constructeur de la classe élection
+     * @param annee année électorale
      */
     public Election(int annee){
         nomsCirconscriptions = new Vector<String>();
@@ -48,7 +48,7 @@ public class Election implements Serializable{
     }
     
     /***
-     * 
+     * constructeur sans paramètre
      */
     public Election(){
            this(Constantes.ANNEE_ELECTION);
@@ -441,12 +441,13 @@ public class Election implements Serializable{
         Circonscription[] Circons;
         int i = 0;
         
-        while(i < partis.size() && !partis.get(i).getNom().equals( nomParti)){
+        while(i < partis.size() && 
+                !partis.get(i).getNom().equals( nomParti)){
             i++;
         }
         if(i < partis.size() && partis.get(i).getNom().equals(nomParti)){
             if(partis.get(i) instanceof PartiDeDroite){
-                
+                //remplir les députés supporteur du parti de droite
                 deputes = ((PartiDeDroite)(partis.get(i))).tabSupporteurs();
                 supporteurs = new String[deputes.length];
                 for(int j = 0; j < deputes.length; j++){
@@ -454,12 +455,12 @@ public class Election implements Serializable{
                 }
                 
             }else if(partis.get(i) instanceof PartiDeGauche){
-                
+                //remplir les OBNL supporteur du parti de GAUCHE
                 supporteurs = new String[]{((PartiDeGauche)(partis.get(i)))
                                   .tabSupporteurs().length + " OBNL"};
                 
             }else if(partis.get(i) instanceof PartiDuCentre){
-                
+                //remplir les Circonscriptions  supportrice du parti de droite
                 Circons = ((PartiDuCentre)(partis.get(i))).tabSupporteurs();
                 supporteurs = new String[Circons.length];
                 for(int j = 0; j < Circons.length; j++){

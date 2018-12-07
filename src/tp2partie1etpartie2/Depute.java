@@ -8,20 +8,20 @@ import java.io.Serializable;
  */
 public class Depute implements Serializable{
     
-    private String nom;
-    private int noCaseCircons;
-    private int noCaseNomParti;
+    private String nom; //nom du député
+    private int noCaseCircons; // numero de case de la circonscription du deputé
+    private int noCaseNomParti; // numero de case de nom du parti du deputé
     
     /**
-     * 
-     * @param nom
-     * @param noCaseCircons
-     * @param noCaseNomParti 
+     * Constructeur de la classe deputé
+     * @param nom nom du député
+     * @param noCaseCircons numero de case de la circonscription du deputé
+     * @param noCaseNomParti numero de case de nom du parti du deputé
      */
     public Depute(String nom, int noCaseCircons, int noCaseNomParti){
-           this.nom = nom;
-           this.noCaseCircons = noCaseCircons;
-           this.noCaseNomParti = noCaseNomParti;
+        this.nom = nom;
+        this.noCaseCircons = noCaseCircons;
+        this.noCaseNomParti = noCaseNomParti;
     }
     
    /**
@@ -30,7 +30,7 @@ public class Depute implements Serializable{
     * @return le nom du député
     */
     public String getNom(){
-         return this.nom;
+        return this.nom;
     }
     
    /**
@@ -39,7 +39,7 @@ public class Depute implements Serializable{
     * @return le numero de case d'une circonscription
     */
     public int getNoCaseCircons(){
-         return this.noCaseCircons;
+        return this.noCaseCircons;
     }
     
    /**
@@ -48,7 +48,7 @@ public class Depute implements Serializable{
     * @return le numero de case d'un parti
     */
     public int getNoCaseNomParti(){
-         return this.noCaseNomParti;
+        return this.noCaseNomParti;
     }
     
    /**
@@ -57,7 +57,7 @@ public class Depute implements Serializable{
     * 
     */
     public void setNom(String nomDep){
-          this.nom = nomDep;
+        this.nom = nomDep;
     }
     
    /**
@@ -66,7 +66,7 @@ public class Depute implements Serializable{
     * @return le nom du député concatené
     */
     public static String prenEtNom(String prenomDep, String nomDep){
-          return prenomDep +" " + nomDep;
+        return prenomDep +" " + nomDep;
     }
     
 }

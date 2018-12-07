@@ -11,19 +11,19 @@ import javax.swing.JPanel;
  * @author Romy Steve
  */
 public class PanneauDeHaut extends JPanel{
-    
+    //les titre des différents titres des sous panel du panneau de bas
     private final static String TITRE_PAN_CIRC = "Noms des circonscriptions";
     private final static String TITRE_PAN_PARTI = "Noms des partis";
     private final static String TITRE_PAN_DEP = "Noms des députés";
     
-    private static PanneauAffichageNoms panCirconscriptions;
-    private static PanneauAffichageNoms panParti;
-    private static PanneauAffichageNoms panDepute;
+    private static PanneauAffichageNoms panCirconscriptions;//panneau noms de circonscription
+    private static PanneauAffichageNoms panParti;//panneau noms de parti
+    private static PanneauAffichageNoms panDepute;//panneau nom de député
    
     
     
     /***
-     * 
+     * constructeur de la classe PanneauDeHaut
      * @param election 
      */
     public PanneauDeHaut(Election election){
@@ -31,22 +31,24 @@ public class PanneauDeHaut extends JPanel{
     }
     
     /***
-     * 
+     * méthode qui permet l'initialiser du panneau de haut
      * @param election 
      */
     private void initComponent(Election election){
         String[] arrNomsParti;
         String[] arrNomsDepute;
-        
+        //initialisation du panneau de circonscription
         panCirconscriptions = new PanneauAffichageNoms(
                               election.obtenirNomsCirconscription(), TITRE_PAN_CIRC);
         
         arrNomsParti = election.obtenirNomsPartisParCirconscription(
                               panCirconscriptions.getFirstItem());
+        //initialisation du panneau de parti
         panParti = new PanneauAffichageNoms(arrNomsParti, TITRE_PAN_PARTI);
         
         arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
                                panCirconscriptions.getFirstItem(), arrNomsParti);
+        //initialisation du de député
         panDepute = new PanneauAffichageNoms(arrNomsDepute, TITRE_PAN_DEP);
         
         
@@ -59,9 +61,9 @@ public class PanneauDeHaut extends JPanel{
         this.add(panDepute);
     }
     /***
+     * Méthode qui permet de mettre à jour le panneau de parti
+     * @param data tableau de nom de parti mis à jour
      * 
-     * @param data
-     * @return 
      */
     public static void updatePanParti(String[] data){
         DefaultListModel model = new DefaultListModel();
@@ -71,13 +73,11 @@ public class PanneauDeHaut extends JPanel{
         }
         panParti.getList().setModel(model);
         panParti.getList().setSelectedIndex(0);
-       // panParti = new PanneauAffichageNoms(data, TITRE_PAN_PARTI);
-        
     }
     /**
+     * Méthode qui permet de mettre à jour le panneau de deputé
+     * @param data tableau de nom de député mis à jour
      * 
-     * @param data
-     * @return 
      */
     public static void updatePanDepute(String[] data){
         DefaultListModel model = new DefaultListModel();

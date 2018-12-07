@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tp2partie1etpartie2;
 
 import java.awt.Dimension;
@@ -15,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 /**
- *
+ * Classe qui permet de construire les panneau d'affichage de noms
  * @author Romy Steve
  */
 public class PanneauAffichageNoms extends JPanel
@@ -25,42 +21,45 @@ public class PanneauAffichageNoms extends JPanel
     private final static int LARG = 250;
     private final static int HAUT = 500;
     
-    private JList list;
-    private JLabel lblTitre;
+    private JList list; // le jList des noms
+    private JLabel lblTitre; // le label du titre
     
     /**
-     * 
-     * @param data
-     * @param titre 
+     * Constructeur de la classe PanneauAffichageNoms
+     * @param data tableau de nom à remplir sur le JList
+     * @param titre le titre sur le jLabel
      */
     public PanneauAffichageNoms(String[] data, String titre){
        initComponent(data, titre);
     }
     /**
-     * 
-     * @return 
+     * accesseur qui permet d'accéder au JList list
+     * @return list Jlist rempli
      */
     public JList getList(){
         return list;
     }
     /***
-     * 
-     * @param data
-     * @param titre 
+     * méthode qui permet de créer chaque panneau de noms 
+     * @param data tableau de nom à mettre le JList
+     * @param titre le titre du JList
      */
     private void initComponent(String[] data, String titre){
-        list = new JList(data); //data has type Object[]
+        //initialiser le JList
+        list = new JList(data); 
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setSelectedIndex(0);
         list.setLayoutOrientation(JList.VERTICAL);
         list.setVisibleRowCount(-1);
         
+        //initialiser le jLabel
         lblTitre = new JLabel(titre);
 
-        
+        //Rendre le JList scrollable
         JScrollPane listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(400, 200));
         
+        //initialiser le JPanel et y mettre le label et le jlist
         this.setSize(LARG, HAUT);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(lblTitre);
@@ -73,8 +72,8 @@ public class PanneauAffichageNoms extends JPanel
     }
     
     /***
-     * 
-     * @return 
+     * Methode qui permet obtenir le premier élement du JList
+     * @return le string sélectionné
      */
     public String getFirstItem(){
         return (String)list.getSelectedValue();

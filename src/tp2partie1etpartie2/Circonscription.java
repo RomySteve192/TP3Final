@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tp2partie1etpartie2;
 import java.io.Serializable;
 /**
@@ -12,14 +8,23 @@ import java.io.Serializable;
  */
 public class Circonscription implements Serializable{
     
-    private int noCircons;
-    private String nomCircons;
-    private int noCaseDepCircons;
+    private int noCircons; //numero de circonscription
+    private String nomCircons; // nom de la circonscription
+    private int noCaseDepCircons; // numero de case du deputé 
+                                  // d'une circonscription particulière
     
+    /**
+     * Constructeur de la classe circonscription
+     * @param noCaseDepCircons // numero de case du deputé 
+     *                         // d'une circonscription particulière
+     */
     public Circonscription( int noCaseDepCircons){
-           this.noCaseDepCircons = noCaseDepCircons;
+        this.noCaseDepCircons = noCaseDepCircons;
     }
     
+    /**
+     * Constructeur sans paramètre
+     */
     public Circonscription(){
            this(Constantes.VIDE);
     }

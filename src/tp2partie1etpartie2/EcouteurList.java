@@ -7,25 +7,26 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
- * @author Romy Steve
+ * La classe qui permet d'écouter les évenement sur les composants JList
+ * @author Romy Steve / Jean Akre
  */
 public class EcouteurList implements ListSelectionListener{
     
-    private Election election;
+    private Election election; // objet Election à passer au constructeur
    
     
     /**
-     * 
-     * @param election 
+     * Constructeur de la classe EcouteurList
+     * @param election objet Election utile à l'instanciation de la classe
      */
     public EcouteurList(Election election){
         this.election = election;
     }
     
-    
-    
-    
+    /***
+     * 
+     * @param e 
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         String item;

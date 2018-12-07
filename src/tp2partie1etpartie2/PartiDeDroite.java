@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tp2partie1etpartie2;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
+ * classe parti de droite dérivée de parti
  * @author Romy Steve
  */
 public class PartiDeDroite extends Parti implements Serializable{
     
-    private ArrayList<Depute> deputes;
+    private ArrayList<Depute> deputes;//liste des objets députés
     
    
     /***
@@ -25,9 +21,6 @@ public class PartiDeDroite extends Parti implements Serializable{
         super(nomPartiDroite);
         deputes = new ArrayList<Depute>();
     }
-   
-    
-    
     
     /*******
      * Rédéfinition de la Méthode getCategorie() qui est dans la classe parente
@@ -42,9 +35,7 @@ public class PartiDeDroite extends Parti implements Serializable{
      * @param depute le député a ajouter
      */
     public void ajouterDepute(Depute depute){
-       
         deputes.add(depute);
-        
     }
     
     /*******
