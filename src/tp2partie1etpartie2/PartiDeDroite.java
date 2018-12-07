@@ -5,13 +5,14 @@
  */
 package tp2partie1etpartie2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Romy Steve
  */
-public class PartiDeDroite extends Parti{
+public class PartiDeDroite extends Parti implements Serializable{
     
     private ArrayList<Depute> deputes;
     

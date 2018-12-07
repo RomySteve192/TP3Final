@@ -2,6 +2,7 @@
 package tp2partie1etpartie2;
 
 import java.awt.GridLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,9 +17,9 @@ public class PanneauDeBas {
     private final static String TITRE_PAN_DEP = "Noms des députés";
     private final static String TITRE_PAN_SUPP = "Noms des supporteurs";
     
-    private PanneauAffichageNoms panPartis;
-    private PanneauAffichageNoms panDep;
-    private PanneauAffichageNoms panSupporteur;
+    private static PanneauAffichageNoms panPartis;
+    private static PanneauAffichageNoms panDep;
+    private static PanneauAffichageNoms panSupporteur;
     
     /***
      * 
@@ -102,6 +103,36 @@ public class PanneauDeBas {
         }
         return retour;
     }
+    
+    /***
+     * 
+     * @param data
+     * @return 
+     */
+    public static void updatePanSupporteur(String[] data){
+        DefaultListModel model = new DefaultListModel();
+        
+        for (int i = 0; i < data.length; i++) {
+            model.addElement(data[i] );
+        }
+        panPartis.getList().setModel(model);
+       // panParti = new PanneauAffichageNoms(data, TITRE_PAN_PARTI);
+        
+    }
+    /**
+     * 
+     * @param data
+     * @return 
+     */
+    public static void updatePanDepute(String[] data){
+        DefaultListModel model = new DefaultListModel();
+        
+        for (int i = 0; i < data.length; i++) {
+            model.addElement(data[i] );
+        }
+        panDep.getList().setModel(model);
+    }
+    
     
     
     

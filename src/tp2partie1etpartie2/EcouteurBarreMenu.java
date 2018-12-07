@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
  */
 public class EcouteurBarreMenu implements ActionListener{
     
-    private Election election;
+    private static Election election;
     private JMenuBar barDeMenu;
     private JFrame frame;
      
@@ -44,6 +44,7 @@ public class EcouteurBarreMenu implements ActionListener{
         if (item == barDeMenu.getMenu(0).getItem(0)) {
             //lecture du fichier texte
             ModuleFichier.getElection(election);
+            ModuleFichier.sauverFichierBinaire(election);
             creerCadre( election, frame);
             
         } else if (item == barDeMenu.getMenu(0).getItem(1)) {
@@ -67,6 +68,10 @@ public class EcouteurBarreMenu implements ActionListener{
         if(election.getIndex().length != 0){
              CadreElection.setElection(election, fenetre);
         }
+    }
+    
+    public static Election electionRempli(){
+        return election;
     }
       
     

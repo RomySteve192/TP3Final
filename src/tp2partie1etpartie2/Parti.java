@@ -5,11 +5,13 @@
  */
 package tp2partie1etpartie2;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Romy Steve
  */
-public class Parti {
+public class Parti implements Serializable{
     //nom du parti
     private String nom;
     

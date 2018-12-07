@@ -36,7 +36,13 @@ public class PanneauAffichageNoms extends JPanel
     public PanneauAffichageNoms(String[] data, String titre){
        initComponent(data, titre);
     }
-    
+    /**
+     * 
+     * @return 
+     */
+    public JList getList(){
+        return list;
+    }
     /***
      * 
      * @param data
@@ -60,6 +66,10 @@ public class PanneauAffichageNoms extends JPanel
         this.add(lblTitre);
         this.add(listScroller);
         this.setBorder(BorderFactory.createEmptyBorder( 5, 5, 5, 5));
+        
+        //Creation et ajout de l'ecouteur au jlist
+        EcouteurList ecouteur = new EcouteurList( EcouteurBarreMenu.electionRempli()); 
+        list.addListSelectionListener(ecouteur);
     }
     
     /***

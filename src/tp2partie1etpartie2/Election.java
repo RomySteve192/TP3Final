@@ -28,6 +28,10 @@ public class Election implements Serializable{
       //utile pour connaitre la categorie du parti à partir du noms du parti
     private ArrayList<String> nomsPartisCentre;
     
+    /***
+     * 
+     * @param annee 
+     */
     public Election(int annee){
         nomsCirconscriptions = new Vector<String>();
         nomsParti = new ArrayList<String>();
@@ -43,6 +47,9 @@ public class Election implements Serializable{
            
     }
     
+    /***
+     * 
+     */
     public Election(){
            this(Constantes.ANNEE_ELECTION);
     }

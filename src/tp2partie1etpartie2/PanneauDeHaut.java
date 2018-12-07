@@ -2,6 +2,7 @@
 package tp2partie1etpartie2;
 
 import java.awt.GridLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -11,13 +12,13 @@ import javax.swing.JPanel;
  */
 public class PanneauDeHaut extends JPanel{
     
-    private final static String titrePanCirc = "Noms des circonscriptions";
-    private final static String titrePanParti = "Noms des partis";
-    private final static String titrePanDep = "Noms des députés";
+    private final static String TITRE_PAN_CIRC = "Noms des circonscriptions";
+    private final static String TITRE_PAN_PARTI = "Noms des partis";
+    private final static String TITRE_PAN_DEP = "Noms des députés";
     
-    private PanneauAffichageNoms panCirconscriptions;
-    private PanneauAffichageNoms panParti;
-    private PanneauAffichageNoms panDepute;
+    private static PanneauAffichageNoms panCirconscriptions;
+    private static PanneauAffichageNoms panParti;
+    private static PanneauAffichageNoms panDepute;
    
     
     
@@ -38,15 +39,15 @@ public class PanneauDeHaut extends JPanel{
         String[] arrNomsDepute;
         
         panCirconscriptions = new PanneauAffichageNoms(
-                              election.obtenirNomsCirconscription(), titrePanCirc);
+                              election.obtenirNomsCirconscription(), TITRE_PAN_CIRC);
         
         arrNomsParti = election.obtenirNomsPartisParCirconscription(
                               panCirconscriptions.getFirstItem());
-        panParti = new PanneauAffichageNoms(arrNomsParti, titrePanParti);
+        panParti = new PanneauAffichageNoms(arrNomsParti, TITRE_PAN_PARTI);
         
         arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
                                panCirconscriptions.getFirstItem(), arrNomsParti);
-        panDepute = new PanneauAffichageNoms(arrNomsDepute, titrePanDep);
+        panDepute = new PanneauAffichageNoms(arrNomsDepute, TITRE_PAN_DEP);
         
         
         
@@ -56,11 +57,34 @@ public class PanneauDeHaut extends JPanel{
         this.add(panCirconscriptions);
         this.add(panParti);
         this.add(panDepute);
+    }
+    /***
+     * 
+     * @param data
+     * @return 
+     */
+    public static void updatePanParti(String[] data){
+        DefaultListModel model = new DefaultListModel();
         
-        
+        for (int i = 0; i < data.length; i++) {
+            model.addElement(data[i] );
+        }
+        panParti.getList().setModel(model);
+       // panParti = new PanneauAffichageNoms(data, TITRE_PAN_PARTI);
         
     }
-    
-    
+    /**
+     * 
+     * @param data
+     * @return 
+     */
+    public static void updatePanDepute(String[] data){
+        DefaultListModel model = new DefaultListModel();
+        
+        for (int i = 0; i < data.length; i++) {
+            model.addElement(data[i] );
+        }
+        panDepute.getList().setModel(model);
+    }
     
 }
