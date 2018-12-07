@@ -115,7 +115,8 @@ public class PanneauDeBas {
         for (int i = 0; i < data.length; i++) {
             model.addElement(data[i] );
         }
-        panPartis.getList().setModel(model);
+        panSupporteur.getList().setModel(model);
+        panSupporteur.getList().setSelectedIndex(0);
        // panParti = new PanneauAffichageNoms(data, TITRE_PAN_PARTI);
         
     }
@@ -131,6 +132,7 @@ public class PanneauDeBas {
             model.addElement(data[i] );
         }
         panDep.getList().setModel(model);
+        panDep.getList().setSelectedIndex(0);
     }
     
     

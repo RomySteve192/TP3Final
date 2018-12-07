@@ -441,10 +441,10 @@ public class Election implements Serializable{
         Circonscription[] Circons;
         int i = 0;
         
-        while(partis.get(i).getNom() != nomParti){
+        while(i < partis.size() && !partis.get(i).getNom().equals( nomParti)){
             i++;
         }
-        if(partis.get(i).getNom() == nomParti){
+        if(i < partis.size() && partis.get(i).getNom().equals(nomParti)){
             if(partis.get(i) instanceof PartiDeDroite){
                 
                 deputes = ((PartiDeDroite)(partis.get(i))).tabSupporteurs();

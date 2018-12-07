@@ -38,29 +38,36 @@ public class EcouteurList implements ListSelectionListener{
         
         JList list = (JList)e.getSource();
         item = (String) list.getSelectedValue();
-        
-        if(verifCircOuPart(election.obtenirNomsCirconscription(), item)){
-            arrNomsParti = election.obtenirNomsPartisParCirconscription(
-                              item);
-            arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
-                               item, arrNomsParti);
-            
-            PanneauDeHaut.updatePanDepute(arrNomsDepute);
-            PanneauDeHaut.updatePanParti(arrNomsParti);
-        }else{
-            s1 = item.replaceAll("\\(", "!").replaceAll("\\)","!");
-            String[] d = election.obtenirNomsParti();
-            parti = (s1.split("!"))[0].trim();
-            if(verifCircOuPart(d, parti)){
-                 arrNomsSupp = election.obtenirNomsSupporteursParParti(
-                                parti);
-                 arrNomsDepute = election.obtenirNomsDeputesParParti(
-                                parti);
-                 
-                PanneauDeBas.updatePanDepute(arrNomsDepute);
-                PanneauDeBas.updatePanSupporteur(arrNomsSupp);
+        if(item != null){
+            if(verifCircOuPart(election.obtenirNomsCirconscription(), item)){
+                arrNomsParti = election.obtenirNomsPartisParCirconscription(
+                                  item);
+                arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
+                                   item, arrNomsParti);
+
+                PanneauDeHaut.updatePanDepute(arrNomsDepute);
+                PanneauDeHaut.updatePanParti(arrNomsParti);
+            }else{
+               
+                s1 = item.replaceAll("\\(", "!").replaceAll("\\)","!");
+                //String[] d = election.obtenirNomsParti();
+                
+                if(item.toLowerCase().contains(("(e)").toLowerCase())){
+                    parti = (s1.split("!"))[0].trim() + "(e)";
+                }else{
+                    parti = (s1.split("!"))[0].trim();
+                }
+                
+                if(verifCircOuPart(election.obtenirNomsParti(), parti)){
+                     arrNomsSupp = election.obtenirNomsSupporteursParParti(
+                                    parti);
+                     arrNomsDepute = election.obtenirNomsDeputesParParti(
+                                    parti);
+
+                    PanneauDeBas.updatePanDepute(arrNomsDepute);
+                    PanneauDeBas.updatePanSupporteur(arrNomsSupp);
+                }
             }
-        
         }
         
     }
@@ -69,10 +76,10 @@ public class EcouteurList implements ListSelectionListener{
        int i = 0;
        boolean retour = false;
        
-       while(i < t.length && t[i] != s){
+       while(i < t.length && !t[i].equals(s)){
            i++;
        }
-       if(i < t.length && t[i] == s){
+       if(i < t.length && t[i].equals(s)){
            retour = true;
        }
        return retour;

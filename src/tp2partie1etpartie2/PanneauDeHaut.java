@@ -70,6 +70,7 @@ public class PanneauDeHaut extends JPanel{
             model.addElement(data[i] );
         }
         panParti.getList().setModel(model);
+        panParti.getList().setSelectedIndex(0);
        // panParti = new PanneauAffichageNoms(data, TITRE_PAN_PARTI);
         
     }
@@ -85,6 +86,7 @@ public class PanneauDeHaut extends JPanel{
             model.addElement(data[i] );
         }
         panDepute.getList().setModel(model);
+        panDepute.getList().setSelectedIndex(0);
     }
     
 }
