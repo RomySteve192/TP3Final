@@ -5,16 +5,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
- * @author Romy Steve
+ * classe parti de gauche dérivée de pari
+ * @author Romy Steve / Jean Akre
  */
 public class PartiDeGauche extends Parti implements Serializable{
-    //LISTE NOMS OBNL
-    private ArrayList<String> noms;
+    
+    private ArrayList<String> noms; //liste de nom des OBNL
     
   
-    /*******
-     * constructeur sans argument
+    /**
+     * constructeur avec argument
+     * @param nomPartiGauche nom du parti de gauche
      */
     public PartiDeGauche(String nomPartiGauche){
         super(nomPartiGauche);

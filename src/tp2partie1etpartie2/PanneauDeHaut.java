@@ -45,11 +45,15 @@ public class PanneauDeHaut extends JPanel{
                               panCirconscriptions.getFirstItem());
         //initialisation du panneau de parti
         panParti = new PanneauAffichageNoms(arrNomsParti, TITRE_PAN_PARTI);
+        panParti.getList().setSelectedIndex(0);
+        panParti.getList().setEnabled(false);
         
         arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
                                panCirconscriptions.getFirstItem(), arrNomsParti);
         //initialisation du de député
         panDepute = new PanneauAffichageNoms(arrNomsDepute, TITRE_PAN_DEP);
+        panDepute.getList().setSelectedIndex(0);
+        panDepute.getList().setEnabled(false);
         
         
         
@@ -72,7 +76,8 @@ public class PanneauDeHaut extends JPanel{
             model.addElement(data[i] );
         }
         panParti.getList().setModel(model);
-        panParti.getList().setSelectedIndex(0);
+       // panParti.getList().setSelectedIndex(0);
+        panParti.getList().setEnabled(false);
     }
     /**
      * Méthode qui permet de mettre à jour le panneau de deputé
@@ -86,7 +91,7 @@ public class PanneauDeHaut extends JPanel{
             model.addElement(data[i] );
         }
         panDepute.getList().setModel(model);
-        panDepute.getList().setSelectedIndex(0);
+       // panDepute.getList().setSelectedIndex(0);
+        panDepute.getList().setEnabled(false);
     }
-    
 }

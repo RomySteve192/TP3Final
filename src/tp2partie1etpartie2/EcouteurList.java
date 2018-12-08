@@ -23,10 +23,10 @@ public class EcouteurList implements ListSelectionListener{
         this.election = election;
     }
     
-    /***
-     * 
-     * @param e 
-     */
+    /**
+      * Methode appelee lorsqu'un evenement valueChanged est genere.
+      * @param e l'evenement genere.
+      */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         String item;
@@ -38,21 +38,24 @@ public class EcouteurList implements ListSelectionListener{
        
         
         JList list = (JList)e.getSource();
-        item = (String) list.getSelectedValue();
+        item = (String) list.getSelectedValue();//obtenir le string sélectionné dans le JList
+        
         if(item != null){
             if(verifCircOuPart(election.obtenirNomsCirconscription(), item)){
+                //obtenir le tableau de nom des partis
                 arrNomsParti = election.obtenirNomsPartisParCirconscription(
                                   item);
+                //obtenir le tableau de nom des noms des deputés
                 arrNomsDepute = election.obtenirNomsDeputesParCirconscription(
                                    item, arrNomsParti);
-
+                //Mettre à jour le panneau de haut jList nom deputé et nom parti
                 PanneauDeHaut.updatePanDepute(arrNomsDepute);
                 PanneauDeHaut.updatePanParti(arrNomsParti);
             }else{
-               
+               //enlever l'orientation du parti qui est en parenthèse 
+               //sur le string sélectionné pour utiliser le nom du parti
                 s1 = item.replaceAll("\\(", "!").replaceAll("\\)","!");
-                //String[] d = election.obtenirNomsParti();
-                
+                // vérifier si le nom du parti est aussi au féminin (ex independant(e)
                 if(item.toLowerCase().contains(("(e)").toLowerCase())){
                     parti = (s1.split("!"))[0].trim() + "(e)";
                 }else{
@@ -60,19 +63,26 @@ public class EcouteurList implements ListSelectionListener{
                 }
                 
                 if(verifCircOuPart(election.obtenirNomsParti(), parti)){
-                     arrNomsSupp = election.obtenirNomsSupporteursParParti(
+                    arrNomsSupp = election.obtenirNomsSupporteursParParti(
                                     parti);
-                     arrNomsDepute = election.obtenirNomsDeputesParParti(
+                    arrNomsDepute = election.obtenirNomsDeputesParParti(
                                     parti);
-
+                    //mettre à jour le panneau de bas
                     PanneauDeBas.updatePanDepute(arrNomsDepute);
                     PanneauDeBas.updatePanSupporteur(arrNomsSupp);
                 }
             }
+            
         }
-        
     }
     
+    /***
+     * méthode qui permet de déterminer si c'est la circonscription
+     * ou le parti qui a été cliquée
+     * @param t tableau de string contenant les noms
+     * @param s le noms à chercher
+     * @return 
+     */
     private boolean verifCircOuPart(String [] t, String s){
        int i = 0;
        boolean retour = false;

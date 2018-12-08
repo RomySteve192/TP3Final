@@ -55,9 +55,9 @@ public class CadreElection extends JFrame implements Runnable{
    }
         
     /**
-     * 
-     * @param election
-     * @param fen 
+     * Méthode qui permet de construire les deux panneaux principale
+     * @param election objet election remplit
+     * @param fen fenetre principale
      */
     public static void setElection(Election election, JFrame fen){
         

@@ -273,7 +273,7 @@ public class ModuleFichier {
     
     /***
      * Méthode qui permet de générer les supporteurs
-     * @param election 
+     * @param election objet Election
      */
     public static void genererSupporteurs(Election election){
         
@@ -307,9 +307,9 @@ public class ModuleFichier {
     }
     
     /***
-     * Pour générer les circonscriptions supportrices
-     * @param centre
-     * @param election 
+     * Méthode Pour générer les circonscriptions supportrices
+     * @param centre le parti du centre
+     * @param election l'objet Election
      */
     private static void genererCirconscriptionSupportrice(PartiDuCentre centre, 
             Election election){

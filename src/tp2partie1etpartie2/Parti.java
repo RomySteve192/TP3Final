@@ -62,6 +62,4 @@ public class Parti implements Serializable{
     public String toString(){
         return nom;
     }
-    
-    
 }

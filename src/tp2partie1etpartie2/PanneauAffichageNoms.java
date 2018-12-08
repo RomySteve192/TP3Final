@@ -78,5 +78,4 @@ public class PanneauAffichageNoms extends JPanel
     public String getFirstItem(){
         return (String)list.getSelectedValue();
     }
-    
 }

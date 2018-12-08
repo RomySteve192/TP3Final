@@ -12,12 +12,13 @@ import javax.swing.JPanel;
  */
 
 public class PanneauDeBas {
-    private JPanel panel;// panneau de bas par composition
+   
     //les titre des différents titres des sous panel du panneau de bas
     private final static String TITRE_PAN_PARTI = "Noms des partis";
     private final static String TITRE_PAN_DEP = "Noms des députés";
     private final static String TITRE_PAN_SUPP = "Noms des supporteurs";
     
+    private JPanel panel;// panneau de bas par composition
     private static PanneauAffichageNoms panPartis; //panneau pour affichage des noms de parti
     private static PanneauAffichageNoms panDep; //panneau pour affichage des noms des députés
     private static PanneauAffichageNoms panSupporteur;//panneau pour affichage des noms des supporteurs
@@ -55,11 +56,15 @@ public class PanneauDeBas {
                               election.obtenirNomsParti()[0]);
         //initialisation du panneau d'affichage de noms des supporteurs
         panSupporteur = new PanneauAffichageNoms(arrNomsSupp, TITRE_PAN_SUPP);
+        panSupporteur.getList().setSelectedIndex(0);
+        panSupporteur.getList().setEnabled(false);
         
         arrNomsDepute = election.obtenirNomsDeputesParParti(
                               election.obtenirNomsParti()[0]);
         //initialisation du panneau d'affichage de noms des députés
         panDep = new PanneauAffichageNoms(arrNomsDepute, TITRE_PAN_DEP);
+        panDep.getList().setSelectedIndex(0);
+        panDep.getList().setEnabled(false);
         
         
         GridLayout grille = new GridLayout(1, 3, 5, 5);
@@ -103,7 +108,6 @@ public class PanneauDeBas {
                                (election.getPartis().get(i))).getCategorie() + ")";
                 }
             }
-           
         }
         return retour;
     }
@@ -120,7 +124,8 @@ public class PanneauDeBas {
             model.addElement(data[i] );
         }
         panSupporteur.getList().setModel(model);
-        panSupporteur.getList().setSelectedIndex(0);
+       // panSupporteur.getList().setSelectedIndex(0);
+        panSupporteur.getList().setEnabled(false);
     }
     /**
      * methode qui permet de mettre à jour le tableau de deputé 
@@ -135,6 +140,7 @@ public class PanneauDeBas {
             model.addElement(data[i] );
         }
         panDep.getList().setModel(model);
-        panDep.getList().setSelectedIndex(0);
+        //panDep.getList().setSelectedIndex(0);
+        panDep.getList().setEnabled(false);
     }
 }

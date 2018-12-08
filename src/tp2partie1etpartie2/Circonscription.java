@@ -26,7 +26,7 @@ public class Circonscription implements Serializable{
      * Constructeur sans paramètre
      */
     public Circonscription(){
-           this(Constantes.VIDE);
+        this(Constantes.VIDE);
     }
     
     /**
@@ -35,7 +35,7 @@ public class Circonscription implements Serializable{
     * @return le nom de la circonscription
     */
     public String getNomCircons(){
-           return this.nomCircons;
+        return this.nomCircons;
     }
     
     /**
@@ -44,7 +44,7 @@ public class Circonscription implements Serializable{
     * @return le numero de la circonscription
     */
     public int getNoCircons(){
-           return this.noCircons;
+        return this.noCircons;
     }
     
    /**
@@ -53,7 +53,7 @@ public class Circonscription implements Serializable{
     * @return le numero de case du deputé de la circonscription
     */
     public int getNoCaseDepCircons(){
-           return this.noCaseDepCircons;
+        return this.noCaseDepCircons;
     }
     
    /**
@@ -82,6 +82,4 @@ public class Circonscription implements Serializable{
     public void setNoCaseDepCircons(int noCaseDepCircons){
            this.noCaseDepCircons = noCaseDepCircons;
     }
- 
-    
 }
